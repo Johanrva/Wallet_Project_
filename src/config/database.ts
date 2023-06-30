@@ -8,10 +8,11 @@ export const db = knex({
     connection: {
         host: 'localhost',
         user: 'postgres',
-        password: process.env.PSW,
+        password: 'changeme',
         database: 'wallet',
         port: 5433,
     },
 })
+
 
 export default db 

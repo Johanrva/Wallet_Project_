@@ -7,3 +7,20 @@
 2023-06-30T03:37:04.848Z-info: Server is listening on port 8086
 2023-06-30T03:41:26.211Z-info: Server is listening on port 8086
 2023-06-30T03:49:11.673Z-info: Server is listening on port 8086
+2023-06-30T15:18:03.427Z-info: Server is listening on port 8086
+2023-06-30T15:22:01.473Z-info: Server is listening on port 8086
+2023-06-30T15:22:29.172Z-info: Server is listening on port 8086
+2023-06-30T15:23:03.994Z-info: Server is listening on port 8086
+2023-06-30T15:27:00.145Z-info: Server is listening on port 8086
+2023-06-30T15:33:05.336Z-info: Server is listening on port 8086
+2023-06-30T16:34:35.158Z-info: Server is listening on port 8086
+2023-06-30T16:36:12.718Z-info: Server is listening on port 8086
+2023-06-30T16:42:36.809Z-info: Server is listening on port 8086
+2023-06-30T19:38:45.829Z-info: Server is listening on port 8086
+2023-06-30T19:41:07.297Z-info: Server is listening on port 8086
+2023-06-30T19:42:15.290Z-info: Server is listening on port 8086
+2023-06-30T19:44:31.319Z-info: Server is listening on port 8086
+2023-06-30T19:54:10.064Z-info: Server is listening on port 8086
+2023-06-30T19:54:23.793Z-error: insert into "wallet" ("created_at", "min_amount", "status", "updated_at", "user_id") values ($1, $2, $3, $4, $5) returning * - duplicate key value violates unique constraint "wallet_user_id_key"
+2023-06-30T20:19:15.029Z-info: Server is listening on port 8086
+2023-06-30T20:22:15.747Z-info: Server is listening on port 8086
