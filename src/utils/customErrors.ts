@@ -19,8 +19,16 @@ class CreateError extends Error {
     }
 }
 
+class UpdateError extends Error {
+    constructor (message: string, componentName?: string) {
+        super(message)
+        this.name = `${componentName}UpdateError`
+    }
+}
+
 export {
     GetAllError,
     GetByIdError,
-    CreateError
+    CreateError,
+    UpdateError
 }

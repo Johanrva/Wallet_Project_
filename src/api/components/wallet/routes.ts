@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { WalletController, WalletControllerImp } from './controller'
-import { WalletServiceImp } from './service'
+import { WalletService, WalletServiceImp } from './service'
 import { WalletRepository } from './repository'
 
 const router = Router()
@@ -11,9 +11,9 @@ const walletController : WalletController = new WalletControllerImp (walletServi
 // Create Wallet
 router.post('/create', walletController.createWallet.bind(walletController))
 // Recharge Wallet
-router.patch('/:wallet_id/recharge')
+router.patch('/:wallet_id/recharge', walletController.rechargeWallet.bind(walletController))
 // Refund Wallet
-router.post('/:wallet_id/refund')
+router.patch('/:wallet_id/refund', walletController.refundWallet.bind(walletController))
 // Tx amount limit
 router.post('/:wallet_id/limit')
 

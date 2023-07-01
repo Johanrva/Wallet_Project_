@@ -8,7 +8,7 @@ module.exports = {
         connection: {
             host: 'localhost',
             user: 'postgres',
-            password: process.env.PSW,
+            password: 'changeme',
             database: 'wallet',
             port: 5433,
        },

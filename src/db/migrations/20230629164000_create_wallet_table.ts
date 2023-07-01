@@ -8,6 +8,7 @@ export async function up (knex: Knex) {
             user_id BIGINT NOT NULL UNIQUE,
             min_amount DOUBLE PRECISION NOT NULL,
             max_amount DOUBLE PRECISION,
+            amount DOUBLE PRECISION,
             status VARCHAR,
             created_at TIMESTAMPTZ,
             updated_at TIMESTAMPTZ,
