@@ -2,14 +2,21 @@ import { Router } from 'express'
 import { TransactionController, TransactionControllerImp } from './controller' 
 import { TransactionServiceImp } from './service'
 import { TransactionRepository } from './repository'
+import { WalletRepository } from '../wallet/repository'
+import { WalletServiceImp } from '../wallet/service'
 
 const router = Router()
 const transactionRepository = new TransactionRepository()
 const transactionService = new TransactionServiceImp(transactionRepository)
-const transactionController : TransactionController = new TransactionControllerImp(transactionService)
+const walletRepository = new WalletRepository ()
+const walletService = new WalletServiceImp (walletRepository)
+
+
+
+const transactionController : TransactionController = new TransactionControllerImp(transactionService, walletService)
 
 // Create Transaction
-router.post('/create',)
+router.post('/create', transactionController.createTx.bind(transactionController))
 // Update Transaction
 router.patch('/:id_tx/update')
 // List Transactions

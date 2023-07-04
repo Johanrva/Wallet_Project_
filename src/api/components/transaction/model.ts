@@ -3,6 +3,7 @@ export interface TransactionReq {
     type : string,
     payee ?: string,
     amount : number,
+    status ?: string,
     created_at ?: Date,
     updated_at ?: Date
 }
@@ -17,3 +18,4 @@ export interface Transaction {
     created_at ?: Date,
     updated_at ?: Date
 }
+
