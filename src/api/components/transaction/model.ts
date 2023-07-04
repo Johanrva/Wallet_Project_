@@ -19,3 +19,8 @@ export interface Transaction {
     updated_at ?: Date
 }
 
+export interface UpdateTransaction{
+    amount ?: number,
+    status ?: string,
+    updated_at ?: Date
+}

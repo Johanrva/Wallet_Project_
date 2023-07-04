@@ -29,9 +29,13 @@ export class WalletControllerImp implements WalletController {
                 })   
             }, 
             (error) => {
+                console.log("Esta en el create")
+
                 this.walletService.createWallet(bodyReq)
                 .then(
                     (wallet) => {
+                        console.log("Entró al status")
+                        console.log(wallet)
                         res.status(201).json(wallet)
                     },
                     (error) => {
