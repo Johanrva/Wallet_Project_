@@ -42,24 +42,28 @@ export class TransactionControllerImp implements TransactionController {
         if (validations) {
             res.status(400).json(validations)
         } else {
-            this.transactionService.createTx(bodyReq)
-            .then(
-                (transaction) => {
-                    const walletDiscount = this.walletService.rechargeWallet(bodyReq.wallet_id,{amount:walletDb.amount-(bodyReq.amount)},walletDb)
-                    if (!walletDiscount) {
-                        logger.error(new Error("Failed Discount wallet amount"))
-                        transaction = this.transactionService.updateTx(transaction.transaction_id, { status: "rechaado" }, transaction)
+            if (bodyReq.type=='directa') {
+                this.transactionService.createTx(bodyReq)
+                .then(
+                    (transaction) => {
+                        const walletDiscount = this.walletService.rechargeWallet(bodyReq.wallet_id,{amount:walletDb.amount-(bodyReq.amount)},walletDb)
+                        if (!walletDiscount) {
+                            logger.error(new Error("Failed Discount wallet amount"))
+                            transaction = this.transactionService.updateTx(transaction.transaction_id, { status: "rechaado" }, transaction)
+                        }
+                        res.status(201).json(transaction)
+                    },
+                    (error) => {
+                        res.status(400).json({
+                            type: error.name,
+                            message: "failed Creating a Transaction"
+                        })
                     }
-                    res.status(201).json(transaction)
-                },
-                (error) => {
-                    res.status(400).json({
-                        type: error.name,
-                        message: "failed Creating a Transaction"
-                    })
-                }
-            )
+                )
+            } else if (bodyReq.type=='validada'){
+                this.transactionService.createTxAsync(bodyReq)
 
+            }
         }
 
     }

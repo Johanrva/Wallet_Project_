@@ -1,18 +1,20 @@
 import { TransactionReq, Transaction, UpdateTransaction } from "./model"
 import { TransactionRepository } from "./repository"
-
+import { KafkaClient } from "../client/kafka"
 export interface TransactionService {
     getAllTransactions(): Promise<Transaction[]>
     getTransactionById( tx_id: number): Promise<Transaction>
     createTx( txReq: TransactionReq) : Promise<Transaction>
+    createTxAsync( txReq: TransactionReq) : Promise<Transaction>
     updateTx(tx_id:number, txReq: UpdateTransaction, txRes: Transaction) : Transaction
 } 
 
 export class TransactionServiceImp implements TransactionService {
     private transactionRepository: TransactionRepository
-
+    private kafkaClient: KafkaClient
     constructor(transactionRepository: TransactionRepository){
         this.transactionRepository = transactionRepository
+        this.kafkaClient = new KafkaClient()
     }
     public async getAllTransactions(): Promise<Transaction[]> {
         const transactions = await this.transactionRepository.getAllTransactions()
@@ -39,4 +41,19 @@ export class TransactionServiceImp implements TransactionService {
         this.transactionRepository.updateTransaction(tx_id,txReq) 
         return updateTransaction
     }
+
+    public async createTxAsync(txReq: TransactionReq) : Promise<Transaction> {
+        const now : Date = new Date()
+       txReq.created_at = now
+       txReq.updated_at = now
+        const txDb = await this.transactionRepository.createTx(txReq)
+        const topic = 'transaction_async_topic'
+        try {
+            await this.kafkaClient.sendNotification(topic, JSON.stringify(txDb))
+        } catch(error){
+            new Error("Failed to send notification to Kafka"+error)
+        }
+        return txDb
+    }
+    
 }
