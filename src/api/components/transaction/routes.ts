@@ -11,8 +11,7 @@ const transactionService = new TransactionServiceImp(transactionRepository)
 const walletRepository = new WalletRepository ()
 const walletService = new WalletServiceImp (walletRepository)
 
-
-
+transactionService.startListenNotify()
 const transactionController : TransactionController = new TransactionControllerImp(transactionService, walletService)
 
 // Create Transaction

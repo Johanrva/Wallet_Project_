@@ -204,7 +204,7 @@ describe('WalletController', () => {
             
         })
 
-        it('should be handler error and return 40 when wallet does not exist',async () => {
+        it('should be handler error and return 400 when wallet does not exist',async () => {
             const walletRecharge = {
                 amount: 10000
             };
