@@ -1,6 +1,6 @@
 import { EachMessagePayload, Kafka } from "kafkajs"
 import logger from "../../../../utils/logger"
-import { Transaction } from "../model"
+import { Transaction, UpdateTransaction } from "../model"
 
 export class KafkaClient {
     private kafka: Kafka
@@ -13,7 +13,7 @@ export class KafkaClient {
             brokers: ["localhost:9092"]
         })
         this.producer = this.kafka.producer()
-        this.consumer = this.kafka.consumer({groupId: 'newconsumer'})
+        this.consumer = this.kafka.consumer({groupId: 'newconsumer4'})
     }
 
     async sendNotification (topic: string, message: Transaction) {
@@ -37,15 +37,24 @@ export class KafkaClient {
         
     }
 
-    async Listener (topic: string, processMessage: (message: string)=> void) {
+    async Listener (topic: string, updateTransaction: (id: number, updates: UpdateTransaction)=> void) {
         await this.consumer.connect()
         await this.consumer.subscribe({ topic: topic, fromBeginning: true})
         await this.consumer.run({
-            eachMessage: async ({topic, partition, message}: EachMessagePayload) => {
-                //console.log(`Partition: ${partition}`)
-                //console.log(`Message: ${message.value?.toString()}`)
+            eachMessage: async ({message}: EachMessagePayload) => {
                 const noti = message.value?.toString()
-                processMessage((noti==undefined)?"":noti)
+                const data:Transaction = JSON.parse((noti==undefined)?"":noti)
+                const updateTx: UpdateTransaction = {
+                    updated_at: new Date(),
+                    status: (data.status=='exitoso')? data.status: 'exitoso'
+                }
+
+                function delay ( ms: number){
+                    return new Promise( resolve => setTimeout(resolve, ms))
+                }
+                await delay (5000)
+                console.log(noti)
+                updateTransaction(data.transaction_id, updateTx)
             }
         })
 

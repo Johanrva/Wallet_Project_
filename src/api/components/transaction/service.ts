@@ -80,7 +80,7 @@ export class TransactionServiceImp implements TransactionService {
         function delay ( ms: number){
             return new Promise( resolve => setTimeout(resolve, ms))
         }
-        await delay (3000)
-        await this.kafkaClient.Listener('transaction_async_topic', this.processNotification)
+        await delay (5000)
+        await this.kafkaClient.Listener('transaction_async_topic', this.transactionRepository.updateTransaction)
     }
 }

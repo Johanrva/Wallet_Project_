@@ -15,7 +15,6 @@ export class TransactionRepository {
 
     public async getTransactionById(transaction_id: number) : Promise<Transaction> {
         try {
-            console.log(transaction_id)
             const transaction = db('transaction').where({transaction_id}).first()
             return transaction
         } catch (error) {
@@ -35,7 +34,6 @@ export class TransactionRepository {
 
     public async updateTransaction(transaction_id: number, updates: Partial<Transaction>) : Promise<void> {
         try {
-            console.log(transaction_id, " Aca está")
             await db('transaction').where({transaction_id}).update(updates)
         } catch (error) {
             console.error(error)
